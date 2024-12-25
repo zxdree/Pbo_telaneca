@@ -1,38 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pboTelAneca;
 
-import dao.MenuDao;
-import java.awt.BorderLayout;
+import dao.ButtonEditor;
+import dao.ButtonRenderer;
+import dao.TransaksiDao;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import model.Menu;
+import model.Transaksi;
 
 /**
  *
  * @author Dewi Puspita Sari
  */
-public class FrameDetailUser extends javax.swing.JFrame {
+
+public class FrameTransaksiAdmin extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameDetailUser
      */
     
-
-    
     private int userId;
 
-    public FrameDetailUser(int userId) {
+    public FrameTransaksiAdmin(int userId) {
         initComponents();
-        this.userId = userId; 
+        this.userId = userId;
+        configureTable();
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -44,14 +43,6 @@ public class FrameDetailUser extends javax.swing.JFrame {
                 bukaFrameLaporanAdmin();
             }
         });
-        
-        BtnTransaksi.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                bukaFrameTransaksiAdmin();
-            }
-        });
-        
         BtnKembali.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -60,40 +51,58 @@ public class FrameDetailUser extends javax.swing.JFrame {
         });
     }
 
+    private void configureTable() {
+        jTable1.setModel(new DefaultTableModel(
+            new Object[][]{},
+            new String[]{"Tgl Transaksi", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 5;
+            }
+        });
+
+        jTable1.getColumn("Action").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+    }
+
+
+
+
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
 
-        System.out.println("idPenjual: " + userId);
+        ArrayList<Transaksi> list = TransaksiDao.getAllTransaksiByPenjual(userId);
 
-        ArrayList<Menu> list = MenuDao.getAllMenusByPenjual(userId);
-        
-        //ArrayList<Menu> list = new ArrayList<>();
-
-        
         if (list.isEmpty()) {
             JLabel label = new JLabel("Maaf, data kosong");
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setForeground(Color.RED);
             label.setFont(new Font("Arial", Font.BOLD, 14));
 
-            add(label, BorderLayout.CENTER);
-            revalidate();
-            repaint();
+            jPanel2.add(label);
+            jPanel2.revalidate();
+            jPanel2.repaint();
         } else {
-            revalidate();
-            repaint();
-            
-            for (Menu menuObj : list) {
+            for (Transaksi transaksiObj : list) {
                 dtm.addRow(new Object[]{
-                    menuObj.getName(),
-                    menuObj.getHarga(),
-                    menuObj.getDeskripsi(),
+                    transaksiObj.getId(),             
+                    transaksiObj.getTglTransaksi(),   
+                    transaksiObj.getNamaPembeli(),    
+                    transaksiObj.getNoTelp(),        
+                    transaksiObj.getTotalBayar(),   
+                    "Details",                       
+                    "Transaksi"                       
                 });
             }
+
         }
     }
+
+
+
     
     private void bukaFrameDashboardAdmin() {
         dispose();
@@ -101,12 +110,7 @@ public class FrameDetailUser extends javax.swing.JFrame {
         FrameDashboardAdmin frameBaru = new FrameDashboardAdmin();
         frameBaru.setVisible(true);
     }
-    private void bukaFrameTransaksiAdmin() {
-        dispose();
-
-        new FrameTransaksiAdmin(userId).setVisible(true); 
-
-    }
+    
     private void bukaFrameLaporanAdmin() {
         dispose();
 
@@ -124,12 +128,10 @@ public class FrameDetailUser extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        BtnTransaksi = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         BtnLaporan = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         BtnKembali = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -139,51 +141,30 @@ public class FrameDetailUser extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
 
-        BtnTransaksi.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setText("Transaksi");
-
-        javax.swing.GroupLayout BtnTransaksiLayout = new javax.swing.GroupLayout(BtnTransaksi);
-        BtnTransaksi.setLayout(BtnTransaksiLayout);
-        BtnTransaksiLayout.setHorizontalGroup(
-            BtnTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnTransaksiLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel1)
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
-        BtnTransaksiLayout.setVerticalGroup(
-            BtnTransaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnTransaksiLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
-        );
-
         BtnLaporan.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("Laporan");
+        jLabel1.setText("Laporan");
 
         javax.swing.GroupLayout BtnLaporanLayout = new javax.swing.GroupLayout(BtnLaporan);
         BtnLaporan.setLayout(BtnLaporanLayout);
         BtnLaporanLayout.setHorizontalGroup(
             BtnLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BtnLaporanLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jLabel2)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jLabel1)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         BtnLaporanLayout.setVerticalGroup(
             BtnLaporanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BtnLaporanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnLaporanLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
 
         BtnKembali.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setText("Kembali");
+        jLabel2.setText("Kembali");
 
         javax.swing.GroupLayout BtnKembaliLayout = new javax.swing.GroupLayout(BtnKembali);
         BtnKembali.setLayout(BtnKembaliLayout);
@@ -191,14 +172,14 @@ public class FrameDetailUser extends javax.swing.JFrame {
             BtnKembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BtnKembaliLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(jLabel4)
+                .addComponent(jLabel2)
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         BtnKembaliLayout.setVerticalGroup(
             BtnKembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnKembaliLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addComponent(jLabel2)
                 .addContainerGap())
         );
 
@@ -208,12 +189,10 @@ public class FrameDetailUser extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(BtnTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(BtnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(454, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,23 +200,22 @@ public class FrameDetailUser extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnLaporan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("Menu");
+        jLabel3.setText("Transaksi");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nama Menu", "Harga", "Deskripsi"
+                "Tgl Transaksi", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -250,8 +228,8 @@ public class FrameDetailUser extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,18 +266,16 @@ public class FrameDetailUser extends javax.swing.JFrame {
         public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             int userId = 1;
-            new FrameDetailUser(userId).setVisible(true);
+            new FrameTransaksiAdmin(userId).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnKembali;
     private javax.swing.JPanel BtnLaporan;
-    private javax.swing.JPanel BtnTransaksi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

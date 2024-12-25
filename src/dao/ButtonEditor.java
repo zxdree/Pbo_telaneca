@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import pboTelAneca.FrameDashboardAdmin;
+import pboTelAneca.FrameDetailTransaksi;
 
 public class ButtonEditor extends DefaultCellEditor {
     private JButton button;
@@ -30,7 +31,7 @@ public class ButtonEditor extends DefaultCellEditor {
         label = (value == null) ? "Details" : value.toString();
         button.setText(label);
         clicked = true;
-        currentTable = table; 
+        currentTable = table;
         currentRow = row;
         return button;
     }
@@ -38,11 +39,11 @@ public class ButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (clicked) {
-            // Ambil ID pengguna dari tabel (kolom pertama)
-            int userId = (int) currentTable.getValueAt(currentRow, 0);
+            int id = (int) currentTable.getValueAt(currentRow, 0); 
             
+
             FrameDashboardAdmin dashboard = (FrameDashboardAdmin) SwingUtilities.getWindowAncestor(currentTable);
-            dashboard.openUserDetails(userId); 
+            dashboard.openUserDetails(id);
         }
         clicked = false;
         return label;

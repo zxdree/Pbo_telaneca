@@ -16,7 +16,7 @@ public class MenuDao {
         try (Connection conn = Koneksi.getConnection(); 
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, menu.getName());
-            pstmt.setString(2, menu.getHarga());
+            pstmt.setDouble(2, menu.getHarga());
             pstmt.setString(3, menu.getDeskripsi());
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Menu Added Successfully");
@@ -28,7 +28,7 @@ public class MenuDao {
     public static ArrayList<Menu> getAllMenusByPenjual(int idPenjual) {
         ArrayList<Menu> arrayList = new ArrayList<>();
         String query = "SELECT * FROM menu WHERE id_penjual = ?";
-
+        
         try (Connection conn = Koneksi.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -36,9 +36,10 @@ public class MenuDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Menu menu = new Menu();
+                    System.out.println(rs.getInt("id"));
                     menu.setId(rs.getInt("id"));
                     menu.setName(rs.getString("nama_menu"));
-                    menu.setHarga(rs.getString("harga_menu"));
+                    menu.setHarga(rs.getDouble("harga_menu"));
                     menu.setDeskripsi(rs.getString("deskripsi_menu"));
                     arrayList.add(menu);
                 }
@@ -62,7 +63,7 @@ public class MenuDao {
                 Menu menu = new Menu();
                 menu.setId(rs.getInt("id"));
                 menu.setName(rs.getString("nama_menu"));
-                menu.setHarga(rs.getString("harga_menu"));
+                menu.setHarga(rs.getDouble("harga_menu"));
                 menu.setDeskripsi(rs.getString("deskripsi_menu"));
                 arrayList.add(menu);
             }
@@ -77,7 +78,7 @@ public class MenuDao {
         try (Connection conn = Koneksi.getConnection(); 
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, menu.getName());
-            pstmt.setString(2, menu.getHarga());
+            pstmt.setDouble(2, menu.getHarga());
             pstmt.setString(3, menu.getDeskripsi());
             pstmt.setInt(4, menu.getId());
             pstmt.executeUpdate();
@@ -110,7 +111,7 @@ public class MenuDao {
                     menu = new Menu();
                     menu.setId(rs.getInt("id"));
                     menu.setName(rs.getString("nama_menu"));
-                    menu.setHarga(rs.getString("harga_menu"));
+                    menu.setHarga(rs.getDouble("harga_menu"));
                     menu.setDeskripsi(rs.getString("deskripsi_menu"));
                 }
             }

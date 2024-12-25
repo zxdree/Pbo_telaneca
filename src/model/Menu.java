@@ -11,9 +11,9 @@ package model;
 public class Menu {
     private int id;
     private String nama_menu;
-    private String harga_menu;
+    private double harga_menu;
     private String deskripsi_menu;
-    private String id_penjual;
+    private int id_penjual;
 
     public int getId() {
         return id;
@@ -39,19 +39,19 @@ public class Menu {
         this.deskripsi_menu = category;
     }
 
-    public String getHarga() {
+    public double getHarga() {
         return harga_menu;
     }
 
-    public void setHarga(String price) {
+    public void setHarga(double price) {
         this.harga_menu = price;
     }
     
-    public String getIdPenjual() {
+    public int getIdPenjual() {
         return id_penjual;
     }
 
-    public void setIdPenjual(String id_penjual) {
+    public void setIdPenjual(int id_penjual) {
         this.id_penjual = id_penjual;
     }
 }

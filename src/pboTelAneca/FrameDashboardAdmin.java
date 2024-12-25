@@ -30,9 +30,10 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 3; // Hanya kolom "Action" yang bisa diedit
+                return column == 3;
             }
         });
+
         jTable1.getColumn("Action").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
     }
@@ -48,17 +49,21 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
         List<User> users = dao.getAllUsers();
 
         tableModel = (DefaultTableModel) jTable1.getModel();
-        tableModel.setRowCount(0); // Bersihkan data lama
+        tableModel.setRowCount(0);
 
         for (User user : users) {
-            tableModel.addRow(new Object[]{user.getId(), user.getName(), user.getEmail(), "Details"});
+            tableModel.addRow(new Object[]{
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                "Details" 
+            });
         }
     }
 
-   public void openUserDetails(int userId) {
-       new FrameDetailUser(userId).setVisible(true); 
-//       JOptionPane.showMessageDialog(this, "Membuka detail untuk user dengan ID: " + userId);
-        
+    public void openUserDetails(int userId) {
+        dispose();
+        new FrameDetailUser(userId).setVisible(true);
     }
 
 
@@ -133,8 +138,9 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,8 +154,9 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -159,30 +166,6 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameDashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameDashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameDashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameDashboardAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FrameDashboardAdmin().setVisible(true);
