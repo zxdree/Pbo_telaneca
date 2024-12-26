@@ -36,7 +36,6 @@ public class MenuDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Menu menu = new Menu();
-                    System.out.println(rs.getInt("id"));
                     menu.setId(rs.getInt("id"));
                     menu.setName(rs.getString("nama_menu"));
                     menu.setHarga(rs.getDouble("harga_menu"));

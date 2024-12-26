@@ -5,7 +5,7 @@ import dao.ButtonRenderer;
 import dao.TransaksiDao;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -15,18 +15,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import model.Transaksi;
 
-/**
- *
- * @author Dewi Puspita Sari
- */
 
 public class FrameTransaksiAdmin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameDetailUser
-     */
-    
     private int userId;
+    
 
     public FrameTransaksiAdmin(int userId) {
         initComponents();
@@ -40,7 +33,7 @@ public class FrameTransaksiAdmin extends javax.swing.JFrame {
         BtnLaporan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                bukaFrameLaporanAdmin();
+                bukaFrameLaporanAdmin(userId);
             }
         });
         BtnKembali.addMouseListener(new MouseAdapter() {
@@ -54,25 +47,21 @@ public class FrameTransaksiAdmin extends javax.swing.JFrame {
     private void configureTable() {
         jTable1.setModel(new DefaultTableModel(
             new Object[][]{},
-            new String[]{"Tgl Transaksi", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"}
+            new String[]{"ID", "Tgl Transaksi", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 5;
+                return column == 6;
             }
         });
 
         jTable1.getColumn("Action").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+        jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "transaksi"));
     }
-
-
-
-
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setRowCount(0);
+        dtm.setRowCount(0); 
 
         ArrayList<Transaksi> list = TransaksiDao.getAllTransaksiByPenjual(userId);
 
@@ -82,28 +71,35 @@ public class FrameTransaksiAdmin extends javax.swing.JFrame {
             label.setForeground(Color.RED);
             label.setFont(new Font("Arial", Font.BOLD, 14));
 
-            jPanel2.add(label);
+            jPanel2.add(label); 
             jPanel2.revalidate();
             jPanel2.repaint();
         } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
             for (Transaksi transaksiObj : list) {
+                String formattedDate = (transaksiObj.getTglTransaksi() != null) 
+                                        ? sdf.format(transaksiObj.getTglTransaksi()) 
+                                        : "N/A";
+
                 dtm.addRow(new Object[]{
-                    transaksiObj.getId(),             
-                    transaksiObj.getTglTransaksi(),   
-                    transaksiObj.getNamaPembeli(),    
-                    transaksiObj.getNoTelp(),        
-                    transaksiObj.getTotalBayar(),   
-                    "Details",                       
-                    "Transaksi"                       
-                });
+                transaksiObj.getId(),
+                formattedDate,
+                transaksiObj.getNamaPembeli(),
+                transaksiObj.getNoTelp(),
+                transaksiObj.getTotalBayar(),
+                transaksiObj.getCatatan(),
+                "Details"
+            });
+
             }
 
+            jPanel2.revalidate();
+            jPanel2.repaint();
         }
     }
 
 
-
-    
     private void bukaFrameDashboardAdmin() {
         dispose();
 
@@ -111,11 +107,16 @@ public class FrameTransaksiAdmin extends javax.swing.JFrame {
         frameBaru.setVisible(true);
     }
     
-    private void bukaFrameLaporanAdmin() {
+    private void bukaFrameLaporanAdmin(int userId) {
         dispose();
 
-        FrameLaporanAdmin frameBaru = new FrameLaporanAdmin();
+        FrameLaporanAdmin frameBaru = new FrameLaporanAdmin(userId);
         frameBaru.setVisible(true);
+    }
+    
+    public void openTransaksiDetails(int userId) {
+        dispose();
+        new FrameDetailTransaksi(userId).setVisible(true);
     }
 
     /**
@@ -209,13 +210,13 @@ public class FrameTransaksiAdmin extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Tgl Transaksi", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"
+                "ID", "Tanggal", "Nama Pembeli", "No Telp", "Total Bayar", "Catatan", "Action"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

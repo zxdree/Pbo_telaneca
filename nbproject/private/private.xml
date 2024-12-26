@@ -4,9 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Programs/NetBeansProjects/PboTelaneca/src/pboTelAneca/FrameDashboardAdmin.java</file>
-            <file>file:/D:/Programs/NetBeansProjects/PboTelaneca/src/dao/ButtonEditor.java</file>
-            <file>file:/D:/Programs/NetBeansProjects/PboTelaneca/src/pboTelAneca/FrameDetailUser.java</file>
-            <file>file:/D:/Programs/NetBeansProjects/PboTelaneca/src/pboTelAneca/FrameTransaksiAdmin.java</file>
+            <file>file:/D:/Programs/NetBeansProjects/PboTelaneca/src/pboTelAneca/FrameDetailTransaksi.java</file>
         </group>
     </open-files>
 </project-private>

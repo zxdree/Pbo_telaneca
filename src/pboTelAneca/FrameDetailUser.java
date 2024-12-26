@@ -41,7 +41,7 @@ public class FrameDetailUser extends javax.swing.JFrame {
         BtnLaporan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                bukaFrameLaporanAdmin();
+                bukaFrameLaporanAdmin(userId);
             }
         });
         
@@ -68,10 +68,7 @@ public class FrameDetailUser extends javax.swing.JFrame {
         System.out.println("idPenjual: " + userId);
 
         ArrayList<Menu> list = MenuDao.getAllMenusByPenjual(userId);
-        
-        //ArrayList<Menu> list = new ArrayList<>();
-
-        
+ 
         if (list.isEmpty()) {
             JLabel label = new JLabel("Maaf, data kosong");
             label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -107,10 +104,10 @@ public class FrameDetailUser extends javax.swing.JFrame {
         new FrameTransaksiAdmin(userId).setVisible(true); 
 
     }
-    private void bukaFrameLaporanAdmin() {
+    private void bukaFrameLaporanAdmin(int userId) {
         dispose();
 
-        FrameLaporanAdmin frameBaru = new FrameLaporanAdmin();
+        FrameLaporanAdmin frameBaru = new FrameLaporanAdmin(userId);
         frameBaru.setVisible(true);
     }
 

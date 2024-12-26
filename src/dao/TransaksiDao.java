@@ -30,6 +30,7 @@ public class TransaksiDao {
                     transaksi.setId(rs.getInt("id_transaksi"));
                     transaksi.setCatatan(rs.getString("catatan"));
                     transaksi.setNamaPembeli(rs.getString("nama_pembeli"));
+                    transaksi.setTglTransaksi(rs.getDate("tgl_transaksi"));
                     transaksi.setNoTelp(rs.getString("no_telp"));
                     transaksi.setTotalBayar(rs.getDouble("total_bayar"));
                     arrayList.add(transaksi);

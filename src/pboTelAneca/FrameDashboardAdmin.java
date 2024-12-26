@@ -35,7 +35,7 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
         });
 
         jTable1.getColumn("Action").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox()));
+        jTable1.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "penjual"));
     }
 
     public FrameDashboardAdmin() {
@@ -56,7 +56,7 @@ public class FrameDashboardAdmin extends javax.swing.JFrame {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                "Details" 
+                "Details"
             });
         }
     }
