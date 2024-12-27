@@ -12,8 +12,7 @@ import Data.User;
 public class Penjual extends User {
 
     public Penjual(int id, int idRole, String name, String email, String password) {
-        super(idRole, name, email, password);
-        
+        super(id, idRole, name, email, password);
     }
     @Override
     public void login() {

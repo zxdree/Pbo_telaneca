@@ -25,8 +25,14 @@ public abstract class User implements Role {
    
 
     // Constructor
-    public User(int idRole, String name, String email, String password) {
+    public User(int id, int idRole, String name, String email, String password) {
         this.id = id;
+        this.idRole = idRole;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+     public User(int idRole, String name, String email, String password) {
         this.idRole = idRole;
         this.name = name;
         this.email = email;

@@ -1,5 +1,6 @@
 package pboTelAneca;
 
+import Data.DBMenu;
 import Data.SessionManager;
 import dao.MenuDao;
 import java.awt.BorderLayout;
@@ -9,19 +10,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import model.Menu;
+import Data.Menu;
 import pbotelaneca.TMenu;
+
+
 
 /**
  *
  * @author Dewi Puspita Sari
  */
 public class PanelDashboard extends javax.swing.JFrame {
-
+private DBMenu koneksi = new DBMenu();
 private JPanel mainPanel;
+private TMenu update;
     /**
      * Creates new form PanelDashboard
      */
@@ -51,12 +56,8 @@ private JPanel mainPanel;
             }
         });
         
-        UpdateMenu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                UpdateMenu();
-            }
-        });
+       
+      
 }
 
 
@@ -79,10 +80,9 @@ private JPanel mainPanel;
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        UpdateMenu = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -180,53 +180,40 @@ private JPanel mainPanel;
                 {null, null, null, null}
             },
             new String [] {
-                "No", "Nama Menu", "Deskripsi", "Harga"
+                "ID", "Nama Menu", "Deskripsi", "Harga"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-
-        UpdateMenu.setBackground(new java.awt.Color(204, 204, 204));
-        UpdateMenu.setText("Update Menu");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(UpdateMenu)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(UpdateMenu)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setText("Hapus Menu");
+        jButton2.setText("Delete");
+        jButton2.setToolTipText("");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(31, 31, 31))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addContainerGap())
+            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
         );
+
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,10 +226,11 @@ private JPanel mainPanel;
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(312, Short.MAX_VALUE))))
+                        .addContainerGap(321, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,14 +240,75 @@ private JPanel mainPanel;
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            int selectedRow = jTable1.getSelectedRow(); 
+    
+    if (selectedRow == -1) { // Jika tidak ada baris yang dipilih
+        JOptionPane.showMessageDialog(this, "Pilih menu yang ingin diupdate terlebih dahulu.");
+        return;
+    }
+    
+    // Mengambil ID menu dari kolom ke-4 (indeks 3) pada baris yang dipilih
+    Object idMenuObject = jTable1.getValueAt(selectedRow, 0); // Kolom ke-4 (indeks 3) berisi ID menu
+    
+    if (idMenuObject == null) {
+        JOptionPane.showMessageDialog(this, "ID menu tidak ditemukan!");
+        return;
+    }
+    
+    int idMenu = (int) idMenuObject; // Ambil ID menu
+    
+    // Lanjutkan untuk membuka form update menu dengan ID menu
+     new TMenu(idMenu).setVisible(true);
+    dispose(); // Tutup panel dashboard
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    int selectedRow = jTable1.getSelectedRow(); 
+    
+    if (selectedRow == -1) { // Jika tidak ada baris yang dipilih
+        JOptionPane.showMessageDialog(this, "Pilih menu yang ingin dihapus terlebih dahulu.");
+        return;
+    }
+
+    // Mengambil ID menu dari kolom ke-4 (indeks 3) pada baris yang dipilih
+    Object idMenuObject = jTable1.getValueAt(selectedRow, 0); // Kolom ke-4 (indeks 3) berisi ID menu
+    
+    if (idMenuObject == null) {
+        JOptionPane.showMessageDialog(this, "ID menu tidak ditemukan!");
+        return;
+    }
+    
+    int idMenu = (int) idMenuObject; // Ambil ID menu
+
+    // Konfirmasi dan hapus menu
+    int jawaban = JOptionPane.showConfirmDialog(this, "Hapus Data " + idMenu + "?", "Hapus", JOptionPane.YES_NO_OPTION);
+    if (jawaban == JOptionPane.YES_OPTION) {
+        try {
+            if (koneksi.deleteMenu(idMenu)) {
+                JOptionPane.showMessageDialog(this, "Berhasil Delete");
+                deleteMenu();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal Delete");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Eksepsi: " + e.getMessage());
+        }
+    } else {
+        // Tampilkan pesan jika tidak ada baris yang dipilih
+        JOptionPane.showMessageDialog(this, "Pilih menu yang ingin diupdate terlebih dahulu.");
+    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void bukaFrameTambahmenu() {
         dispose();
@@ -274,42 +323,65 @@ private JPanel mainPanel;
         FrameTambahMenu frameBaru = new FrameTambahMenu();
         frameBaru.setVisible(true);
     }
-    private void UpdateMenu(){
-        new TMenu().setVisible(true);
+    
+    private void deleteMenu(){
         dispose();
+        PanelDashboard panle = new PanelDashboard();
+        panle.setVisible(true);
+    }
+    private void UpdateMenu(){
+        dispose();
+        update.setVisible(true);
+        
+
+        
         
     }
     
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {
+
+private void formComponentShown(java.awt.event.ComponentEvent evt) {
     DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-    dtm.setRowCount(0);
+    dtm.setRowCount(0); // Hapus semua baris sebelumnya
 
-    ArrayList<Menu> list = MenuDao.getAllMenus();
-    
-    if (getComponentCount() > 1) { 
-        remove(1);
-    }
+    // Dapatkan ID penjual dari sesi pengguna (contoh)
+    int idPenjual = SessionManager.getLoggedInUser().getId();
 
+    // Ambil data menu berdasarkan ID penjual
+    ArrayList<Menu> list = DBMenu.getAllMenusBySeller(idPenjual);
+
+    // Periksa apakah data kosong
     if (list.isEmpty()) {
-        JLabel label = new JLabel("Maaf, data kosong");
+        JLabel label = new JLabel("Maaf, tidak ada menu untuk penjual ini.");
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(Color.RED);
         label.setFont(new Font("Arial", Font.BOLD, 14));
         
-        add(label, BorderLayout.CENTER);
-        revalidate();
-        repaint();
+        // Tambahkan label jika data kosong
+        jTable1.setLayout(new BorderLayout());
+        jTable1.add(label, BorderLayout.CENTER);
+        jTable1.revalidate();
+        jTable1.repaint();
     } else {
+       
         for (Menu menuObj : list) {
+            
+            jButton2.putClientProperty("id", menuObj.getId());
             dtm.addRow(new Object[] {
                 menuObj.getId(),
-                menuObj.getName(),
-                menuObj.getDeskripsi(),
-                menuObj.getHarga()
+                menuObj.getNamaMenu(),
+                menuObj.getDeskripsiMenu(),
+                menuObj.getHargaMenu()
+                
+       
             });
+             
         }
+        
     }
 }
+    
+   
+
     /**
      * @param args the command line arguments
      */
@@ -348,17 +420,18 @@ private JPanel mainPanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BtnNewMenu;
     private javax.swing.JPanel BtnNewTransaksi;
-    private javax.swing.JLabel UpdateMenu;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+  
 }

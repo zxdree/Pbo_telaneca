@@ -43,17 +43,14 @@ public class Register extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         namafield = new javax.swing.JTextField();
         emailfield = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         passfield = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,9 +91,6 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setText("Buat Akun");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, -1));
 
-        jLabel5.setText("No file selected.");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, -1, -1));
-
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pbotelaneca/Google (1).png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,40 +110,27 @@ public class Register extends javax.swing.JFrame {
         namafield.setBackground(new java.awt.Color(214, 214, 214));
         namafield.setMinimumSize(new java.awt.Dimension(55, 22));
         namafield.setPreferredSize(new java.awt.Dimension(55, 22));
-        jPanel1.add(namafield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 250, 30));
+        jPanel1.add(namafield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 250, 30));
 
         emailfield.setBackground(new java.awt.Color(214, 214, 214));
         emailfield.setMinimumSize(new java.awt.Dimension(55, 22));
         emailfield.setPreferredSize(new java.awt.Dimension(55, 22));
-        jPanel1.add(emailfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 250, 30));
-
-        jButton5.setText("Browse...");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, -1, -1));
-
-        jButton6.setText("Browse...");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, -1, -1));
-
-        jLabel6.setText("Foto Qris");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, -1, -1));
-
-        jLabel7.setText("No file selected.");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, -1, -1));
-
-        jLabel8.setText("Foto Kedai");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, -1, -1));
+        jPanel1.add(emailfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 250, 30));
 
         passfield.setBackground(new java.awt.Color(214, 214, 214));
-        jPanel1.add(passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, 250, 30));
+        jPanel1.add(passfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 250, 30));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("Password");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 100, -1));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Nama");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setText("Email");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 50, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 590, 350));
 
@@ -228,16 +209,8 @@ if (jButton2.getText().equals("SIGN UP")) {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+          new Login2().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,16 +254,13 @@ if (jButton2.getText().equals("SIGN UP")) {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField namafield;

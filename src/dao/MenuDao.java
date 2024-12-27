@@ -44,7 +44,7 @@ public class MenuDao {
     
     public static ArrayList<Menu> getAllMenus() {
     ArrayList<Menu> arrayList = new ArrayList<>();
-    String query = "SELECT * FROM menu ";
+    String query = "SELECT id, nama_menu, harga_menu, deskripsi_menu FROM menu WHERE id = ?";
     
     try (Connection conn = Koneksi.getConn(); 
          Statement stmt = conn.createStatement();
@@ -53,7 +53,6 @@ public class MenuDao {
         // Iterate through the result set and populate the array list
         while (rs.next()) {
             Menu menu = new Menu();
-            menu.setId(rs.getInt("id"));
             menu.setName(rs.getString("nama_menu"));
             menu.setHarga(rs.getString("harga_menu"));
             menu.setDeskripsi(rs.getString("deskripsi_menu"));

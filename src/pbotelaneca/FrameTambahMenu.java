@@ -21,15 +21,39 @@ import Data.MenuMakanan;
 import Data.MenuMinuman;
 import Data.User;
 import Data.SessionManager;
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
 public class FrameTambahMenu extends javax.swing.JFrame {
 
     private final DefaultTableModel model = new DefaultTableModel();
     private DBMenu koneksi = new DBMenu();
     private DBuser koneksi2 = new DBuser();
     private User a;
+    private JPanel mainPanel;
     
     public FrameTambahMenu() {
         initComponents();
+        
+        
+        mainPanel = new JPanel(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
+        jPanel4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                PanelDashboard panle = new PanelDashboard();
+                panle.setVisible(true);
+            }
+        });
+        
+        jPanel5.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               
+            }
+        });
     }
 
     /**

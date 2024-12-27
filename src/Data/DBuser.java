@@ -43,7 +43,9 @@ public class DBuser {
                 
                 // Tentukan objek User berdasarkan id_role
                 if (idRole == 1) {
-                    return  Penjual = new Penjual(id, idRole, nama, email, password); // Sesuaikan dengan konstruktor Penjual
+                    Penjual penjual = new Penjual(id, idRole, nama, email, password);
+                    // Sesuaikan dengan konstruktor 
+                    return penjual;
                 }
             }
         }
@@ -67,7 +69,7 @@ public class DBuser {
                 System.out.println("ID Role: " + idRole);
                 System.out.println("Nama: " + nama);
                 
-                // Tentukan objek User berdasarkan id_role
+               
                 if (idRole == 2) {
                     
                     return Admin = new Admin(id, idRole, nama, email, password); // Sesuaikan dengan konstruktor Penjual

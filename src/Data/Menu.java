@@ -13,7 +13,7 @@ public class Menu {
     private int idPenjual;
     private String namaMenu;
     private String deskripsiMenu;
-    private double hargaMenu;
+    private int hargaMenu;
     protected String jenis_menu;
 
     public String getJenis_menu() {
@@ -27,6 +27,21 @@ public class Menu {
         this.deskripsiMenu = deskripsiMenu;
         this.idPenjual = idPenjual;
     }
+    public Menu() {
+        this.namaMenu = namaMenu;
+        this.hargaMenu = hargaMenu;
+        this.deskripsiMenu = deskripsiMenu;
+        this.idPenjual = idPenjual;
+    }
+    
+    public Menu(int id,String namaMenu, String deskripsiMenu, int hargaMenu){
+         this.id = id;
+        this.namaMenu = namaMenu;
+        this.hargaMenu = hargaMenu;
+        this.deskripsiMenu = deskripsiMenu;
+        this.idPenjual = idPenjual;
+    }
+    
 
     // Getter dan Setter
     public int getId() {
@@ -65,7 +80,7 @@ public class Menu {
         return hargaMenu;
     }
 
-    public void setHargaMenu(double hargaMenu) {
+    public void setHargaMenu(int hargaMenu) {
         this.hargaMenu = hargaMenu;
     }
 
